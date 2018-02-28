@@ -8,7 +8,7 @@
     <h3>Menu</h3>
     <hr>
   </div>
-</div>"
+</div>
 
  <div fxFlex>
   <md-grid-list cols='2' rowHeight='200px'>
@@ -20,24 +20,5 @@
     </md-grid-tile>
    </md-grid-list>
  </div> <!-- close card -->
-
- <div fxflex *ngIf='selectedDish'>
-   <md-card>
-     <md-card-header>
-       <md-card-title>
-       <h3>{{selectedDish.name | uppercase}}</h3>
-       </md-card-title>
-     </md-card-header>
-     <img md-card-image src={{selectedDish.image}} alt={{selectedDish.name}}>
-      <md-card-content>
-        <p>
-          {{selectedDish.description}}
-        </p>
-     </md-card-content>
-     <md-card-actions>
-       <button md-button>LIKE</button>
-       <button md-button>SHARE</button>
-     </md-card-actions>
-   </md-card>
 
 </div> <!--close container-->
