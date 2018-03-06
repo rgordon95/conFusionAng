@@ -14,6 +14,7 @@ export const routes: Routes = [
   { path: 'menu',    component: MenuComponent },
   { path: 'about',   component: AboutComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'dishdetail/:id', component: DishdetailComponent},
  //default route provided for incorrect path entry
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
