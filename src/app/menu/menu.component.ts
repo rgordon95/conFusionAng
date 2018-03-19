@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Dish } from '../shared/dish';
-import { DISHES } from '../shared/dishes';
+// deleted when adding in @inject baseURL import { DISHES } from '../shared/dishes';
 import { DishService } from '../services/dish.service';
 
 @Component({
@@ -13,9 +13,9 @@ export class MenuComponent implements OnInit {
 
     dishes: Dish[];
 
-    selectedDish: Dish;
+  //deleted  selectedDish: Dish;
 
-  constructor(private dishService: DishService) { }
+  constructor(private dishService: DishService, @Inject('BaseURL') private BaseURL) { }
 
   ngOnInit() {
     this.dishService.getDishes()
@@ -23,9 +23,6 @@ export class MenuComponent implements OnInit {
         // when promise resolves "then" *do this* (in this
         // case take what was received from getDishes and display the dish)
 }
-  onSelect(dish: Dish){
-    this.selectedDish = dish;
-  }
-
+//deleted onSelectdish() method 
 
   }
