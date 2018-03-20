@@ -28,6 +28,8 @@ export class DishdetailComponent implements OnInit {
   comment: Comment;
 
   errMess: string;
+//stores dish for comment submission
+  dishcopy = null;
 
   formErrors = {
     'author': '',
@@ -58,7 +60,7 @@ export class DishdetailComponent implements OnInit {
   this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
   this.route.params
     .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
-    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
+    .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
     errmess => this.errMess = <any>errmess);
   }
 
@@ -76,7 +78,8 @@ export class DishdetailComponent implements OnInit {
     this.commentForm = this.fb.group({
      author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
      comment: ['', [Validators.required, Validators.minLength(2)] ],
-     rating: [5]
+     rating: 5,
+     date: ''
   });
     this.commentForm.valueChanges
     .subscribe(data => this.onValueChanged(data));
@@ -103,13 +106,16 @@ export class DishdetailComponent implements OnInit {
 
    onSubmit() {
      this.comment = this.commentForm.value;
-     console.log(this.comment);
-     this.dish.comments.push(this.comment);
      this.comment.date = new Date().toISOString();
+     console.log(this.comment);
+     this.dishcopy.comments.push(this.comment);
+     this.dishcopy.save()
+     .subscribe(dish => { this.dish = dish; console.log(this.dish); });
+
      this.commentForm.reset({
-       name: '',
-       comment: '',
-       rating: 5,
+       author: ' ',
+       comment: ' ',
+       rating: 5
      });
    }
 
