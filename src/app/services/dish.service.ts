@@ -11,33 +11,38 @@ import 'rxjs/add/observable/of';
 //for error with Http Module
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-//import restangular modules for rest api use
-import { RestangularModule, Restangular } from 'ngx-restangular';
+
 
 
 @Injectable()
 export class DishService {
 
-  constructor(private restangular: Restangular,
-              private processHTTPMsg: ProcessHTTPMsgService) { }
+  constructor(private http: Http,
+              private processHTTPMsgService: ProcessHTTPMsgService) { }
 
 
-              getDishes(): Observable<Dish[]> {
-  return this.restangular.all('dishes').getList();
-}
+                getDishes(): Observable<Dish[]> {
+                  return this.http.get(baseURL + 'dishes')
+                                  .map(res => { return this.processHTTPMsgService.extractData(res); })
+                                  .catch(error => { return this.processHTTPMsgService.handlerror(error); });
+                }
 
-getDish(id: number): Observable<Dish> {
-  return  this.restangular.one('dishes',id).get();
-}
+                getDish(id: number): Observable<Dish> {
+                  return  this.http.get(baseURL + 'dishes/'+ id)
+                                  .map(res => { return this.processHTTPMsgService.extractData(res); })
+                                  .catch(error => { return this.processHTTPMsgService.handlerror(error); });
+                }
 
-getFeaturedDish(): Observable<Dish> {
-  return this.restangular.all('dishes').getList({featured: true})
-    .map(dishes => dishes[0]);
-}
+                getFeaturedDish(): Observable<Dish> {
+                  return this.http.get(baseURL + 'dishes?featured=true')
+                                  .map(res => { return this.processHTTPMsgService.extractData(res)[0]; })
+                                  .catch(error => { return this.processHTTPMsgService.handlerror(error); });
+                }
 
-getDishIds(): Observable<number[]> {
-  return this.getDishes()
-    .map(dishes => { return dishes.map(dish => dish.id)})
-    .catch(error => { return Observable.of(error); });
-}
+                getDishIds(): Observable<number[]> {
+                  return this.getDishes()
+                    .map(dishes => { return dishes.map(dish => dish.id) })
+                    .catch(error => { return Observable.of(error); });
+                }
+
 } // end export class

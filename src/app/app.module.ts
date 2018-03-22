@@ -29,10 +29,6 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { baseURL } from './shared/baseurl';
 //import ProcessHTTPMsgService for interaction with server
 import { ProcessHTTPMsgService } from './services/process-httpmsg.service'
-//import for rest api integration
-import { RestangularModule, Restangular } from 'ngx-restangular';
-import { RestangularConfigFactory } from './shared/restConfig';
-
 
 @NgModule({
   declarations: [
@@ -54,8 +50,7 @@ import { RestangularConfigFactory } from './shared/restConfig';
     MaterialModule,
     FlexLayoutModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    RestangularModule.forRoot(RestangularConfigFactory)
+    ReactiveFormsModule
   ],
   providers: [
     DishService,
