@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/observable';
 //import server url and HTTP MSG service
 import { baseURL } from '../shared/baseurl';
 import { ProcessHTTPMsgService } from './process-httpmsg.service';
+import { RestangularModule, Restangular } from 'ngx-restangular';
+
 //simulates delay
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/observable/of';
@@ -18,7 +20,7 @@ import 'rxjs/add/operator/map';
 export class DishService {
 
   constructor(private http: Http,
-              private processHTTPMsgService: ProcessHTTPMsgService) { }
+              private processHTTPMsgService: ProcessHTTPMsgService, private restangular: Restangular) { }
 
 
                 getDishes(): Observable<Dish[]> {

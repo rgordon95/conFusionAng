@@ -99,22 +99,19 @@ export class DishdetailComponent implements OnInit {
      const messages = this.validationMessages[field];
      for (const key in control.errors) {
        this.formErrors[field] += messages[key] + ' ';
-     }
-   }
- }
- }
+      }
+    }
+  }
+}
 
    onSubmit() {
      this.comment = this.commentForm.value;
      this.comment.date = new Date().toISOString();
      console.log(this.comment);
-     this.dishcopy.comments.push(this.comment);
-     this.dishcopy.save()
-     .subscribe(dish => { this.dish = dish; console.log(this.dish); });
-
+     this.dish.comments.push(this.comment);
      this.commentForm.reset({
-       author: ' ',
-       comment: ' ',
+       author: '',
+       comment: '',
        rating: 5
      });
    }
