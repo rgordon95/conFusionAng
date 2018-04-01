@@ -23,28 +23,24 @@ export class DishService {
               private processHTTPMsgService: ProcessHTTPMsgService, private restangular: Restangular) { }
 
 
-                getDishes(): Observable<Dish[]> {
-                  return this.http.get(baseURL + 'dishes')
-                                  .map(res => { return this.processHTTPMsgService.extractData(res); })
-                                  .catch(error => { return this.processHTTPMsgService.handlerror(error); });
-                }
+              getDishes(): Observable<Dish[]> {
+    return this.http.get(baseURL + 'dishes')
+                    .map(res => { return this.processHTTPMsgService.extractData(res); });
+  }
 
-                getDish(id: number): Observable<Dish> {
-                  return  this.http.get(baseURL + 'dishes/'+ id)
-                                  .map(res => { return this.processHTTPMsgService.extractData(res); })
-                                  .catch(error => { return this.processHTTPMsgService.handlerror(error); });
-                }
+  getDish(id: number): Observable<Dish> {
+    return  this.http.get(baseURL + 'dishes/'+ id)
+                    .map(res => { return this.processHTTPMsgService.extractData(res); });
+  }
 
-                getFeaturedDish(): Observable<Dish> {
-                  return this.http.get(baseURL + 'dishes?featured=true')
-                                  .map(res => { return this.processHTTPMsgService.extractData(res)[0]; })
-                                  .catch(error => { return this.processHTTPMsgService.handlerror(error); });
-                }
+  getFeaturedDish(): Observable<Dish> {
+    return this.http.get(baseURL + 'dishes?featured=true')
+                    .map(res => { return this.processHTTPMsgService.extractData(res)[0]; });
+  }
 
-                getDishIds(): Observable<number[]> {
-                  return this.getDishes()
-                    .map(dishes => { return dishes.map(dish => dish.id) })
-                    .catch(error => { return Observable.of(error); });
-                }
-
+  getDishIds(): Observable<number[]> {
+    return this.getDishes()
+      .map(dishes => { return dishes.map(dish => dish.id) });
+  }
+  
 } // end export class
