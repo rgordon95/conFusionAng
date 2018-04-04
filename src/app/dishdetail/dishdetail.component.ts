@@ -38,7 +38,7 @@ export class DishdetailComponent implements OnInit {
 
   commentForm: FormGroup;
   comment: Comment;
-
+ author: string;
   errMess: string;
   visibility = 'shown';
 //stores dish for comment submission
