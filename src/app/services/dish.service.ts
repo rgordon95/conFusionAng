@@ -24,7 +24,7 @@ export class DishService {
                private restangular: Restangular) { }
 
 
-               getDishes(): Observable<Dish[]> {
+     getDishes(): Observable<Dish[]> {
      return this.restangular.all('dishes').getList();
    }
 

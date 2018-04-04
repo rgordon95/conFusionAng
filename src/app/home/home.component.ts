@@ -10,6 +10,10 @@ import { LeaderService } from '../services/leader.service';
 
 import { flyInOut } from '../animations/app.animation';
 import { expand } from '../animations/app.animation';
+import { Http, Response } from '@angular/http';
+import { baseURL } from '../shared/baseurl';
+import { ProcessHTTPMsgService } from '../services/process-httpmsg.service';
+import { RestangularModule, Restangular } from 'ngx-restangular';
 
 @Component({
   selector: 'app-home',
@@ -30,11 +34,13 @@ export class HomeComponent implements OnInit {
   promotion: Promotion;
   leader: Leader;
   dishErrMess:string;
-  PromoErrMess: string;
+  promoErrMess: string;
+  leaderErrMess: string;
 
   constructor(private dishservice: DishService,
     private promotionservice: PromotionService,
-  private leaderservice: LeaderService,
+  private leaderservice: LeaderService, private restangular: Restangular, private http: Http,
+              private processHTTPMsgService: ProcessHTTPMsgService,
 @Inject('BaseURL') private BaseURL) { }
 
   ngOnInit() {
@@ -43,9 +49,10 @@ export class HomeComponent implements OnInit {
       errmess => this.dishErrMess = <any>errmess);
     this.promotionservice.getFeaturedPromotion()
       .subscribe(promotion => this.promotion = promotion,
-      errmess => this.PromoErrMess = <any>errmess);
+      errmess => this.promoErrMess = <any>errmess);
     this.leaderservice.getFeaturedLeader()
-      .subscribe(leader => this.leader = leader);
+      .subscribe(leader => this.leader = leader,
+      errmess => this.leaderErrMess = <any>errmess);
   }
 
 }
