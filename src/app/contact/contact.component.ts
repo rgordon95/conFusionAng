@@ -99,8 +99,15 @@ export class ContactComponent implements OnInit {
 			.subscribe(feedback => {
 				this.feedbackcopy = feedback;
 	    	console.log(this.feedbackcopy);
-	})
-			//	.subscribe();
+				this.submitted = true;
+				setTimeout(function() {
+					//inside setTimeout: hide form
+					this.feedbackForm.visibility = 'hidden';
+					this.submitted = false;
+					//inside: show feedbackcopy to user
+
+			}, 5000); //end timeOut
+	});
       this.feedbackForm.reset({
         firstname: '',
         lastname: '',
