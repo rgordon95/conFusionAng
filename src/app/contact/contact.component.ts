@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestangularModule, Restangular } from 'ngx-restangular';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut } from '../animations/app.animation';
+import { flyInOut, visibility } from '../animations/app.animation';
 import { FeedbackService } from '../services/feedback.service';
 @Component({
   selector: 'app-contact',
@@ -13,7 +13,8 @@ import { FeedbackService } from '../services/feedback.service';
 'style': 'display: block;'
 },
 animations: [
-  flyInOut()
+  flyInOut(),
+	visibility()
 ]
 })
 export class ContactComponent implements OnInit {
@@ -22,6 +23,7 @@ export class ContactComponent implements OnInit {
    feedbackForm: FormGroup;
    feedback: Feedback;
    contactType = ContactType;
+	 visibility = 'shown';
    formErrors = {
      'firstname': '',
      'lastname': '',
@@ -94,9 +96,11 @@ export class ContactComponent implements OnInit {
       this.feedback = this.feedbackForm.value;
 			console.log(this.feedback);
 		  this.feedbackservice.submitFeedback(this.feedback)
-			.subscribe(feedback => {this.feedbackcopy = feedback;
-		console.log(this.feedbackcopy); })
-				.subscribe();
+			.subscribe(feedback => {
+				this.feedbackcopy = feedback;
+	    	console.log(this.feedbackcopy);
+	})
+			//	.subscribe();
       this.feedbackForm.reset({
         firstname: '',
         lastname: '',
