@@ -3,6 +3,7 @@ import { Leader } from '../shared/leader';
 import { LEADERS } from '../shared/leaders';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { ContactComponent } from '../contact/contact.component';
 //import server url and HTTP MSG service
 import { baseURL } from '../shared/baseurl';
 import { ProcessHTTPMsgService } from './process-httpmsg.service';
@@ -19,16 +20,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class FeedbackService {
 
-  constructor( private restangular: Restangular) { }
+  constructor( private restangular: Restangular,private http: Http,
+              private processHTTPMsgService: ProcessHTTPMsgService) { }
 
 	feedback: Feedback;
 	feedbackForm: FormGroup;
 
-	submitFeedback(): Observable<Feedback> {
-	return this.restangular.all('feedback').post(this.feedbackForm)
-	.subscribe(feedback => {
-		feedback.putElement(2, {'comment': 'new comment'}); //baseUrl + /feedback
-		console.log('look @ mee');
-	});
-}
+	submitFeedback(model: any): Observable<Feedback> {
+	return this.restangular.all('feedback').post(model, this.feedback);
+	};
 }

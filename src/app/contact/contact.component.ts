@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { RestangularModule, Restangular } from 'ngx-restangular';
 import { Feedback, ContactType } from '../shared/feedback';
 import { flyInOut } from '../animations/app.animation';
 import { FeedbackService } from '../services/feedback.service';
@@ -18,6 +18,7 @@ animations: [
 })
 export class ContactComponent implements OnInit {
 
+	feedbackcopy = null;
    feedbackForm: FormGroup;
    feedback: Feedback;
    contactType = ContactType;
@@ -49,7 +50,7 @@ export class ContactComponent implements OnInit {
    },
  };
 
-   constructor(private fb: FormBuilder) {
+   constructor(private fb: FormBuilder,  private feedbackservice: FeedbackService, private restangular: Restangular) {
      this.createForm();
    }
 
@@ -91,7 +92,10 @@ export class ContactComponent implements OnInit {
 
     onSubmit() {
       this.feedback = this.feedbackForm.value;
-      console.log(this.feedback);
+			console.log(this.feedback);
+		  this.feedbackservice.submitFeedback(this.feedback)
+			.subscribe(feedback => {this.feedbackcopy = feedback;
+		console.log(this.feedbackcopy); });
       this.feedbackForm.reset({
         firstname: '',
         lastname: '',
