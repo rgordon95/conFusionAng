@@ -7,7 +7,8 @@ import { Observable } from 'rxjs/Observable';
 import { baseURL } from '../shared/baseurl';
 import { ProcessHTTPMsgService } from './process-httpmsg.service';
 import { RestangularModule, Restangular } from 'ngx-restangular';
-
+import { Feedback, ContactType } from '../shared/feedback';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/observable/of';
@@ -16,23 +17,18 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class LeaderService {
+export class FeedbackService {
 
   constructor( private restangular: Restangular) { }
 
-  leaders: Leader[];
-  leaderErrMess: string;
+	feedback: Feedback;
+	feedbackForm: FormGroup;
 
-    getLeaders(): Observable<Leader[]> {
-      return this.restangular.all('leaders').getList();
-    }
-
-    getLeader(id: number): Observable<Leader> {
-      return this.restangular.one('leaders',id).get();
-    }
-
-    getFeaturedLeader(): Observable<Leader> {
-      return this.restangular.all('leaders').getList({featured: true})
-      .map(leaders => leaders[0]);
-      }
+	submitFeedback(): Observable<Feedback> {
+	return this.restangular.all('feedback').post(this.feedbackForm)
+	.subscribe(feedback => {
+		feedback.putElement(2, {'comment': 'new comment'}); //baseUrl + /feedback
+		console.log('look @ mee');
+	});
+}
 }
