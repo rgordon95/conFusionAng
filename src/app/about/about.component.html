@@ -59,13 +59,17 @@
     <md-list-item>
          <h4 md-line>{{leader.name}} {{leader.abbr | uppercase}}</h4>
          <p md-line>{{leader.designation}}</p>
-        <img mat-list-icon src='{{leader.image}}' alt='{{leader.name}}'>
+        <img mat-list-icon src="{{BaseURL + leader.image}}" alt={{leader.name}}>
         <p md-line>{{leader.description}} </p>
     </md-list-item>
   </md-list>
   </div>
   <div [hidden]="leaders">
     <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+  <div *ngIf="leaderErrMess">
+    <h2>Error</h2>
+    <h4>{{leaderErrMess}}</h4>
   </div>
 
 </div>
