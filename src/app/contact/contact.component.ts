@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestangularModule, Restangular } from 'ngx-restangular';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut, visibility } from '../animations/app.animation';
+import { flyInOut, visibility, expand } from '../animations/app.animation';
 import { FeedbackService } from '../services/feedback.service';
 @Component({
   selector: 'app-contact',
@@ -14,17 +14,19 @@ import { FeedbackService } from '../services/feedback.service';
 },
 animations: [
   flyInOut(),
-	visibility()
+	visibility(),
+	expand()
 ]
 })
 export class ContactComponent implements OnInit {
 
-	feedbackcopy = null;
-   feedbackForm: FormGroup;
-   feedback: Feedback;
-   contactType = ContactType;
-	 visibility = 'shown';
-   formErrors = {
+  	feedbackcopy = null;
+    feedbackForm: FormGroup;
+    feedback: Feedback;
+    contactType = ContactType;
+	  visibility = 'shown';
+	  submitted = true;
+    formErrors = {
      'firstname': '',
      'lastname': '',
      'telnum': '',
@@ -93,20 +95,26 @@ export class ContactComponent implements OnInit {
 }
 
     onSubmit() {
+			var self = this;
       this.feedback = this.feedbackForm.value;
 			console.log(this.feedback);
 		  this.feedbackservice.submitFeedback(this.feedback)
 			.subscribe(feedback => {
 				this.feedbackcopy = feedback;
 	    	console.log(this.feedbackcopy);
-				this.submitted = true;
+				 this.visibility = 'hidden'; //hides form
+				 this.submitted = true;
+				 console.log(this);
 				setTimeout(function() {
 					//inside setTimeout: hide form
-					this.feedbackForm.visibility = 'hidden';
-					this.submitted = false;
-					//inside: show feedbackcopy to user
-
+					console.log(this);
+				  self.visibility = 'shown';
+					self.submitted = false;
+		     //inside: show feedbackcopy to user
+					console.log('in timer');
 			}, 5000); //end timeOut
+       console.log('out of timer');
+
 	});
       this.feedbackForm.reset({
         firstname: '',

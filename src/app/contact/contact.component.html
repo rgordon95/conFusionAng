@@ -38,7 +38,7 @@
         </div>
       </div>
 
-      <form  novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" [hidden]='submitted'>
+      <form  novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" [@visibility]="visibility">
           <p>
             <md-input-container class="half-width"
              dividerColor="{{(formErrors.firstname) ? 'warn' : 'primary'}}">
@@ -94,13 +94,13 @@
           </p>
           <button type="submit" md-button class="background-primary text-floral-white" [disabled]="feedbackForm.invalid">Submit</button>
         </form>
-				<div [hidden]="feedback || errMess">
+				<div [hidden]="feedback || errMess" *ngIf="feedback">
 			       <h3>Submitting Form</h3>
 			       <md-spinner></md-spinner>
 			     </div>
-				<md-list [hidden]="!submitted" *ngIf="feedback ">
+				<md-list *ngIf="feedback && submitted">
 					<h3>Your Submission</h3>
-					<md-list-item>
+					<md-list-item [@expand]>
 						<p md-line>First Name:&nbsp;{{ feedback.firstname }}</p>
 						<p md-line>Last Name:&nbsp;{{ feedback.lastname }}</p>
 						<p md-line>Tel. Number:&nbsp;{{ feedback.telnum }}</p>

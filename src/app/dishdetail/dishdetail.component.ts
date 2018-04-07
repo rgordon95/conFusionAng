@@ -38,7 +38,7 @@ export class DishdetailComponent implements OnInit {
 
   commentForm: FormGroup;
   comment: Comment;
- author: string;
+  author: string;
   errMess: string;
   visibility = 'shown';
 //stores dish for comment submission
@@ -122,16 +122,16 @@ export class DishdetailComponent implements OnInit {
      this.comment = this.commentForm.value;
      this.comment.date = new Date().toISOString();
      this.dishcopy.comments.push(this.comment);
-    this.dishcopy.save()
+     this.dishcopy.save()
       .subscribe(dish => { this.dish = dish; console.log(this.dish); });
-     console.log(this.comment);
-     this.dish.comments.push(this.comment);
-     this.commentForm.reset({
-       author: '',
-       comment: '',
-       rating: 5
-     });
-   }
+       console.log(this.comment);
+       this.dish.comments.push(this.comment);
+       this.commentForm.reset({
+        author: '',
+        comment: '',
+        rating: 5
+      });
+    }
 
 
 }
