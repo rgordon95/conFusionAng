@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { RestangularModule, Restangular } from 'ngx-restangular';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut } from '../animations/app.animation';
-
+import { flyInOut, visibility, expand } from '../animations/app.animation';
+import { FeedbackService } from '../services/feedback.service';
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -13,15 +13,21 @@ import { flyInOut } from '../animations/app.animation';
 'style': 'display: block;'
 },
 animations: [
-  flyInOut()
+  flyInOut(),
+	visibility(),
+	expand()
 ]
 })
 export class ContactComponent implements OnInit {
 
-   feedbackForm: FormGroup;
-   feedback: Feedback;
-   contactType = ContactType;
-   formErrors = {
+  	feedbackcopy = null;
+		showLoader = false;
+    feedbackForm: FormGroup;
+    feedback: Feedback;
+    contactType = ContactType;
+	  visibility = 'shown';
+	  submitted = true;
+    formErrors = {
      'firstname': '',
      'lastname': '',
      'telnum': '',
@@ -49,7 +55,7 @@ export class ContactComponent implements OnInit {
    },
  };
 
-   constructor(private fb: FormBuilder) {
+   constructor(private fb: FormBuilder,  private feedbackservice: FeedbackService, private restangular: Restangular) {
      this.createForm();
    }
 
@@ -90,8 +96,29 @@ export class ContactComponent implements OnInit {
 }
 
     onSubmit() {
+			var self = this;
+			this.showLoader = true;
       this.feedback = this.feedbackForm.value;
-      console.log(this.feedback);
+
+			console.log(this.feedback);
+			console.log(this.showLoader);
+		  this.feedbackservice.submitFeedback(this.feedback)
+			.subscribe(feedback => {
+				this.feedbackcopy = feedback;
+				this.showLoader = false;
+	    	console.log(this.feedbackcopy + this.showLoader);
+				 this.visibility = 'hidden'; //hides form
+		  		this.submitted = true;
+				 console.log(this);
+				setTimeout(function() {
+					console.log(self);
+					 self.showLoader = false;
+				   self.visibility = 'shown';
+			     self.submitted = false;
+			}, 5000); //end timeOut
+       console.log('out of timer');
+
+	});
       this.feedbackForm.reset({
         firstname: '',
         lastname: '',
@@ -101,6 +128,6 @@ export class ContactComponent implements OnInit {
         contacttype: 'None',
         message: ''
       });
-    }
+    };
 
  }
