@@ -103,13 +103,13 @@ export class ContactComponent implements OnInit {
 				this.feedbackcopy = feedback;
 	    	console.log(this.feedbackcopy);
 				 this.visibility = 'hidden'; //hides form
-				 this.submitted = true;
+		  		self.submitted = false;
 				 console.log(this);
 				setTimeout(function() {
 					//inside setTimeout: hide form
 					console.log(this);
 				  self.visibility = 'shown';
-					self.submitted = false;
+			     this.submitted = true;
 		     //inside: show feedbackcopy to user
 					console.log('in timer');
 			}, 5000); //end timeOut

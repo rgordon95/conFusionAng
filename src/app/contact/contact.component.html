@@ -38,7 +38,7 @@
         </div>
       </div>
 
-      <form  novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" [@visibility]="visibility">
+      <form  novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" [@visibility]="visibility" [@expand]>
           <p>
             <md-input-container class="half-width"
              dividerColor="{{(formErrors.firstname) ? 'warn' : 'primary'}}">
@@ -94,19 +94,31 @@
           </p>
           <button type="submit" md-button class="background-primary text-floral-white" [disabled]="feedbackForm.invalid">Submit</button>
         </form>
-				<div [hidden]="feedback || errMess" *ngIf="feedback">
+				<div *ngIf="submitted && feedback">
 			       <h3>Submitting Form</h3>
 			       <md-spinner></md-spinner>
-			     </div>
-				<md-list *ngIf="feedback && submitted">
+		   </div>
+			  <md-list *ngIf="feedback && !submitted">
 					<h3>Your Submission</h3>
 					<md-list-item [@expand]>
 						<p md-line>First Name:&nbsp;{{ feedback.firstname }}</p>
+					</md-list-item>
+					<md-list-item [@expand]>
 						<p md-line>Last Name:&nbsp;{{ feedback.lastname }}</p>
-						<p md-line>Tel. Number:&nbsp;{{ feedback.telnum }}</p>
+					</md-list-item>
+					<md-list-item [@expand]>
+							<p md-line>Tel. Number:&nbsp;{{ feedback.telnum }}</p>
+					</md-list-item>
+					<md-list-item [@expand]>
 						<p md-line>Email:&nbsp;{{ feedback.email }}</p>
+				  </md-list-item>
+					<md-list-item [@expand]>
 						<p md-line>May We Contact?&nbsp;{{ feedback.agree }}</p>
+				  </md-list-item>
+				  <md-list-item [@expand]>
 						<p md-line>How:&nbsp;{{ feedback.contacttype }}</p>
+					</md-list-item>
+					<md-list-item [@expand]>
 						<p md-line>Your Message:&nbsp;{{ feedback.message }}</p>
 					</md-list-item>
 			</md-list>
