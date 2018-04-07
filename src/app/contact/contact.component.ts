@@ -21,6 +21,7 @@ animations: [
 export class ContactComponent implements OnInit {
 
   	feedbackcopy = null;
+		showLoader = false;
     feedbackForm: FormGroup;
     feedback: Feedback;
     contactType = ContactType;
@@ -96,22 +97,24 @@ export class ContactComponent implements OnInit {
 
     onSubmit() {
 			var self = this;
+			this.showLoader = true;
       this.feedback = this.feedbackForm.value;
+
 			console.log(this.feedback);
+			console.log(this.showLoader);
 		  this.feedbackservice.submitFeedback(this.feedback)
 			.subscribe(feedback => {
 				this.feedbackcopy = feedback;
-	    	console.log(this.feedbackcopy);
+				this.showLoader = false;
+	    	console.log(this.feedbackcopy + this.showLoader);
 				 this.visibility = 'hidden'; //hides form
-		  		self.submitted = false;
+		  		this.submitted = true;
 				 console.log(this);
 				setTimeout(function() {
-					//inside setTimeout: hide form
-					console.log(this);
-				  self.visibility = 'shown';
-			     this.submitted = true;
-		     //inside: show feedbackcopy to user
-					console.log('in timer');
+					console.log(self);
+					 self.showLoader = false;
+				   self.visibility = 'shown';
+			     self.submitted = false;
 			}, 5000); //end timeOut
        console.log('out of timer');
 

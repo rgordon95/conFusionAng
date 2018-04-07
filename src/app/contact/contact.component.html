@@ -94,11 +94,11 @@
           </p>
           <button type="submit" md-button class="background-primary text-floral-white" [disabled]="feedbackForm.invalid">Submit</button>
         </form>
-				<div *ngIf="submitted && feedback">
+				<div [hidden]='this.showLoader === false'>
 			       <h3>Submitting Form</h3>
 			       <md-spinner></md-spinner>
 		   </div>
-			  <md-list *ngIf="feedback && !submitted">
+			  <md-list *ngIf="feedbackcopy && submitted">
 					<h3>Your Submission</h3>
 					<md-list-item [@expand]>
 						<p md-line>First Name:&nbsp;{{ feedback.firstname }}</p>
