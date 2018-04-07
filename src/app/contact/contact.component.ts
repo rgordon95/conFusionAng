@@ -95,7 +95,8 @@ export class ContactComponent implements OnInit {
 			console.log(this.feedback);
 		  this.feedbackservice.submitFeedback(this.feedback)
 			.subscribe(feedback => {this.feedbackcopy = feedback;
-		console.log(this.feedbackcopy); });
+		console.log(this.feedbackcopy); })
+				.subscribe();
       this.feedbackForm.reset({
         firstname: '',
         lastname: '',
