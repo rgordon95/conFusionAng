@@ -38,7 +38,7 @@
         </div>
       </div>
 
-      <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+      <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" [@expand]>
           <p>
             <md-input-container class="half-width"
              dividerColor="{{(formErrors.firstname) ? 'warn' : 'primary'}}">
